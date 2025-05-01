@@ -1,0 +1,18 @@
+1) Identifica el nombre del recurso: Supón que tienes una VM llamada legacy-vm en la zona us-central1-a.
+
+2) Declara el recurso en tu archivo Terraform (main.tf):
+
+resource "google_compute_instance" "legacy" {
+  name         = "legacy-vm"
+  machine_type = "e2-micro"
+  zone         = "us-central1-a"
+
+  # Agrega los parámetros según el recurso existente
+  # Terraform solo lo gestionará correctamente si la definición coincide
+}
+
+
+3) Usa el comando de importación:
+
+terraform import google_compute_instance.legacy projects/[PROJECT_ID]/zones/us-central1-a/instances/legacy-vm
+
