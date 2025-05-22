@@ -1,0 +1,29 @@
+# Objetivo: Usar terraform workspace para manejar múltiples entornos (dev, staging, prod) desde una misma configuración IaC.
+
+# Uso básico en terminal:
+terraform workspace new dev
+terraform workspace new staging
+terraform workspace new prod
+
+# Dentro de main.tf, uso de terraform.workspace:
+resource "google_compute_instance" "web_instance" {
+  name         = "web-${terraform.workspace}"
+  machine_type = "e2-micro"
+  zone         = "us-central1-a"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {}
+  }
+
+  labels = {
+    environment = terraform.workspace
+  }
+}
+
